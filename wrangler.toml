@@ -1,0 +1,9 @@
+name = "mandgo-db-replace-api-endpoint"
+main = "index.js" # Point to the root-level index.js
+compatibility_date = "2023-10-01"
+
+# D1 Database Configuration
+[[d1_databases]]
+binding = "DB" # The name you'll use to access the database in your Worker
+database_name = "my-database" # The name of your D1 database
+database_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" # Replace with your D1 Database ID

@@ -1,0 +1,36 @@
+# Ignore Node.js dependencies
+node_modules/
+
+# Ignore environment variables
+.env
+.env.local
+
+# Ignore build artifacts
+dist/
+build/
+
+# Ignore Wrangler development files
+.wrangler/
+.wrangler.local
+
+# Ignore logs
+*.log
+logs/
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE-specific files
+.vscode/
+.idea/
+
+# Ignore npm debug logs
+npm-debug.log*
+
+# Ignore TypeScript build output
+*.js.map
+*.d.ts
+
+# Ignore local development files
+*.local

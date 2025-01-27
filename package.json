@@ -1,0 +1,24 @@
+{
+  "name": "mango-db-replace-api-endpoint",
+  "version": "1.0.0",
+  "description": "A **scalable, database-agnostic API** designed to **replace the MongoDB Data API endpoint** with a SQL backend. This project allows you to interact with SQL databases (e.g., PostgreSQL, MySQL, SQLite, D1) using a **MongoDB-like API**. It’s built to work with **Cloudflare Workers**, **Hono**, and **D1**, but can be adapted to other backend environments and databases.",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@cloudflare/workers-types": "^4.0.0",
+    "hono": "^4.6.19",
+    "mango-db-replace-api-endpoint": "file:",
+    "wrangler": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "typescript": "^5.0.0"
+  }
+}
