@@ -1,17 +1,17 @@
+import { D1Adapter } from "./d1Adapter";
+
 class DatabaseService {
-  constructor(client) {
-    this.client = client;
+  constructor(config, client) {
+    if (config.database.type === "d1") {
+      this.adapter = new D1Adapter(client);
+    } else {
+      throw new Error("Unsupported database type");
+    }
   }
 
   // Find documents
   async find(collection, filter) {
-    const query = `SELECT * FROM ${collection} WHERE ${this.buildWhereClause(filter)}`;
-    const values = this.extractValues(filter);
-    const result = await this.client
-      .prepare(query)
-      .bind(...values)
-      .all();
-    return result.results;
+    return this.adapter.find(collection, filter);
   }
 
   // Find one document
