@@ -4,12 +4,11 @@ import { handleError, validateRequestBody } from "../utils/errorHandler";
 
 const router = new Hono();
 
-// Initialize database service with D1 client
-const dbService = new DatabaseService(router.db);
-
 // Handle `aggregate` endpoint
 router.post("/aggregate", async (c) => {
   try {
+    const config = c.get("config");
+    const dbService = c.get("dbService") || new DatabaseService(config, c.env.DB);
     const body = await c.req.json();
     c.req.body = body; // Attach parsed body to request object
 

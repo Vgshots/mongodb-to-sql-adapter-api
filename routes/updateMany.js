@@ -4,8 +4,8 @@ import { handleError, validateRequestBody } from "../utils/errorHandler";
 
 const router = new Hono();
 
-// Handle `find` endpoint
-router.post("/find", async (c) => {
+// Handle `updateMany` endpoint
+router.post("/updateMany", async (c) => {
   try {
     const config = c.get("config");
     const dbService = c.get("dbService") || new DatabaseService(config, c.env.DB);
@@ -13,13 +13,13 @@ router.post("/find", async (c) => {
     c.req.body = body; // Attach parsed body to request object
 
     // Validate required fields
-    validateRequestBody(c, ["database", "collection", "filter"]);
+    validateRequestBody(c, ["database", "collection", "filter", "update"]);
 
-    const { collection, filter } = body;
-    const documents = await dbService.find(collection, filter);
-    return c.json({ documents });
+    const { collection, filter, update } = body;
+    const updatedDocuments = await dbService.updateMany(collection, filter, update);
+    return c.json({ matchedCount: updatedDocuments.length, modifiedCount: updatedDocuments.length });
   } catch (err) {
-    return handleError(c, err, "Failed to fetch documents");
+    return handleError(c, err, "Failed to update documents");
   }
 });
 

@@ -31,6 +31,32 @@ A **scalable, database-agnostic API** designed to **replace the MongoDB Data API
 
 ---
 
+## 🚀 Getting Started
+
+To get started with this project, you'll need to have Node.js and Wrangler installed.
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/your-username/mongodb-to-sql-adapter-api.git
+    cd mongodb-to-sql-adapter-api
+    ```
+2.  **Install the dependencies:**
+    ```bash
+    npm install
+    ```
+3.  **Configure your database:**
+    See the "Configuration" section for more details.
+4.  **Run the project locally:**
+    ```bash
+    npm start
+    ```
+5.  **Deploy the project:**
+    ```bash
+    npm run deploy
+    ```
+
+---
+
 ## 🚀 Why Use This Project?
 
 ### Replace MongoDB Data API
@@ -162,21 +188,34 @@ wrangler deploy
 
 ```
 mongodb-to-sql-adapter-api/
-├── src/
-│   ├── index.js            # Entry point for Cloudflare Workers
-│   ├── services/           # Database service layer
-│   │   └── databaseService.js
-│   ├── routes/             # API route handlers
-│   │   ├── find.js
-│   │   ├── insert.js
-│   │   ├── update.js
-│   │   ├── delete.js
-│   │   └── aggregate.js
-│   └── utils/              # Utility functions
-│       ├── queryBuilder.js
-│       └── errorHandler.js
-├── wrangler.toml           # Cloudflare Workers configuration
-└── README.md               # Project documentation
+├── config/
+│   └── config.js           # Configuration file
+├── middleware/
+│   ├── auth.js             # API key authentication middleware
+│   └── logging.js          # Logging middleware
+├── routes/
+│   ├── aggregate.js        # Aggregate endpoint
+│   ├── apiRoutes.js        # All API routes
+│   ├── delete.js           # Delete endpoints
+│   ├── find.js             # Find endpoints
+│   ├── insert.js           # Insert endpoints
+│   └── update.js           # Update endpoints
+├── services/
+│   ├── d1Adapter.js        # D1 database adapter
+│   └── databaseService.js  # Database service
+├── tests/
+│   └── find.test.js        # Tests for the find endpoint
+├── utils/
+│   ├── errorHandler.js     # Error handler
+│   ├── httpError.js        # HttpError class
+│   └── queryBuilder.js     # Query builder
+├── .gitignore              # Git ignore file
+├── README.md               # Project documentation
+├── index.js                # Entry point
+├── instructions.js         # Instructions
+├── package-lock.json       # Package lock file
+├── package.json            # Package file
+└── wrangler.toml           # Wrangler configuration
 ```
 
 ---
@@ -192,7 +231,7 @@ mongodb-to-sql-adapter-api/
 
 ### Database Service Layer
 
-The `DatabaseService` abstracts all database operations (e.g., `find`, `insert`, `update`, `delete`, `aggregate`). It uses the `queryBuilder.js` utility to generate SQL queries dynamically.
+The `DatabaseService` abstracts all database operations (e.g., `find`, `insert`, `update`, `delete`, `aggregate`). It uses a database adapter to interact with the database, which makes it easy to add support for other databases in the future.
 
 ### Error Handling
 
@@ -250,6 +289,37 @@ The API provides detailed error messages for debugging. For example:
 ### Other Environments
 
 You can adapt this project to other backend environments (e.g., Node.js, Express) by replacing the database client in `config/db.js`.
+
+---
+
+## ⚙️ Configuration
+
+The configuration for this project is located in the `config/config.js` file. This file contains the configuration for the database.
+
+### D1
+
+To use D1, you'll need to update the `wrangler.toml` file with your D1 database information.
+
+```toml
+[[d1_databases]]
+binding = "DB"
+database_name = "my-database"
+database_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+```
+
+### Other Databases
+
+To use other databases, you'll need to create a new database adapter and update the `DatabaseService` to use it.
+
+---
+
+## 🧪 Testing
+
+This project uses `vitest` for testing. To run the tests, use the following command:
+
+```bash
+npm test
+```
 
 ---
 

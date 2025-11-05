@@ -2,10 +2,13 @@ import { Hono } from "hono";
 import { config } from "./config/config";
 import { instructions } from "./instructions"; // Import the instructions
 import { apiKeyAuth } from "./middleware/auth";
+import { logging } from "./middleware/logging";
 import apiRoutes from "./routes/apiRoutes";
 import { handleError } from "./utils/errorHandler";
 
 const app = new Hono();
+
+app.use("*", logging);
 
 app.use("*", (c, next) => {
   c.set("config", config);
