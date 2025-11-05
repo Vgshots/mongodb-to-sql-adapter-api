@@ -9,7 +9,7 @@
   "scripts": {
     "start": "wrangler dev",
     "deploy": "wrangler deploy",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest"
   },
   "dependencies": {
     "@cloudflare/workers-types": "^4.0.0",
@@ -18,7 +18,8 @@
     "wrangler": "^3.0.0"
   },
   "devDependencies": {
-    "@types/node": "^18.0.0",
-    "typescript": "^5.0.0"
+    "@types/node": "^20.19.24",
+    "typescript": "^5.0.0",
+    "vitest": "^4.0.7"
   }
 }

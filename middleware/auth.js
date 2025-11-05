@@ -1,11 +1,10 @@
-const apiKey = "s9KnNOC1bOl0vVlDXmbye1peMjfbdtH1TxlhIcQu5wKCftMhps9oavsltFZyNqHm";
+import { handleError } from "../utils/errorHandler";
 
-const authenticate = (req, res, next) => {
-  const requestApiKey = req.headers["api-key"];
-  if (requestApiKey !== apiKey) {
-    return res.status(401).json({ error: "Unauthorized" });
+// API key authentication middleware
+export const apiKeyAuth = (c, next) => {
+  const apiKey = c.req.header("api-key");
+  if (!apiKey || apiKey !== c.env.API_KEY) {
+    return handleError(c, null, "Unauthorized", 401);
   }
-  next();
+  return next();
 };
-
-module.exports = { authenticate };

@@ -1,13 +1,16 @@
 import { Hono } from "hono";
+import { config } from "./config/config";
 import { instructions } from "./instructions"; // Import the instructions
-import aggregateRoutes from "./routes/aggregate";
-import deleteRoutes from "./routes/delete";
-import findRoutes from "./routes/find";
-import insertRoutes from "./routes/insert";
-import updateRoutes from "./routes/update";
+import { apiKeyAuth } from "./middleware/auth";
+import apiRoutes from "./routes/apiRoutes";
 import { handleError } from "./utils/errorHandler";
 
 const app = new Hono();
+
+app.use("*", (c, next) => {
+  c.set("config", config);
+  return next();
+});
 
 // Middleware for JSON parsing
 app.use("*", async (c, next) => {
@@ -27,11 +30,7 @@ app.get("/", async (c) => {
 });
 
 // Mount routes
-app.route("/app/data-test/endpoint/data/v1/action", findRoutes);
-app.route("/app/data-test/endpoint/data/v1/action", insertRoutes);
-app.route("/app/data-test/endpoint/data/v1/action", updateRoutes);
-app.route("/app/data-test/endpoint/data/v1/action", deleteRoutes);
-app.route("/app/data-test/endpoint/data/v1/action", aggregateRoutes);
+app.route("/app/data-test/endpoint/data/v1/action", apiKeyAuth, apiRoutes);
 
 // Error handling middleware
 app.onError((err, c) => {

@@ -4,6 +4,9 @@ compatibility_date = "2023-10-01"
 
 # D1 Database Configuration
 [[d1_databases]]
-binding = "DB" # The name you'll use to access the database in your Worker
-database_name = "my-database" # The name of your D1 database
-database_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" # Replace with your D1 Database ID
+binding = "DB"
+database_name = "my-database"
+database_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+
+[vars]
+API_KEY = "your-secret-api-key"
