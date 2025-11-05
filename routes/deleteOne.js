@@ -4,8 +4,8 @@ import { handleError, validateRequestBody } from "../utils/errorHandler";
 
 const router = new Hono();
 
-// Handle `find` endpoint
-router.post("/find", async (c) => {
+// Handle `deleteOne` endpoint
+router.post("/deleteOne", async (c) => {
   try {
     const config = c.get("config");
     const dbService = c.get("dbService") || new DatabaseService(config, c.env.DB);
@@ -16,10 +16,10 @@ router.post("/find", async (c) => {
     validateRequestBody(c, ["database", "collection", "filter"]);
 
     const { collection, filter } = body;
-    const documents = await dbService.find(collection, filter);
-    return c.json({ documents });
+    const deletedDocument = await dbService.deleteOne(collection, filter);
+    return c.json({ deletedCount: 1, deletedDocument });
   } catch (err) {
-    return handleError(c, err, "Failed to fetch documents");
+    return handleError(c, err, "Failed to delete document");
   }
 });
 

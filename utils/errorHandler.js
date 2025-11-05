@@ -1,3 +1,5 @@
+import { HttpError } from "./httpError";
+
 const handleError = (c, error, customMessage) => {
   console.error("Error:", error);
 
@@ -20,10 +22,7 @@ const validateRequestBody = (c, requiredFields) => {
   const missingFields = requiredFields.filter((field) => !body[field]);
 
   if (missingFields.length > 0) {
-    throw {
-      statusCode: 400,
-      message: `Missing required fields: ${missingFields.join(", ")}`
-    };
+    throw new HttpError(400, `Missing required fields: ${missingFields.join(", ")}`);
   }
 };
 
